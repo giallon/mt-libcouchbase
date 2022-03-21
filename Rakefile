@@ -1,11 +1,10 @@
 require 'rubygems'
+Bundler.setup
 require 'rspec/core/rake_task'  # testing framework
 require 'yard'                  # yard documentation
 require 'ffi'                   # loads the extension
 require 'rake/clean'            # for the :clobber rake task
 require File.expand_path('../lib/libcouchbase/ext/tasks', __FILE__)    # platform specific rake tasks used by compile
-
-
 
 # By default we don't run network tests
 task :default => :limited_spec
