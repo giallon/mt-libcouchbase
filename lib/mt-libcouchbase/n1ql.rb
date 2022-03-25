@@ -67,7 +67,7 @@ module MTLibcouchbase
         def results(&row_modifier)
             n1ql_view = @connection.n1ql_query(self)
 
-            current = ::Libuv::Reactor.current
+            current = ::MTLibuv::Reactor.current
             if current && current.running?
                 ResultsLibuv.new(n1ql_view, current, &row_modifier)
             elsif Object.const_defined?(:EventMachine) && EM.reactor_thread?

@@ -102,7 +102,7 @@ module MTLibcouchbase
                         if err.is_a? MTLibcouchbase::Error::KeyNotFound
                             nil
                         else
-                            ::Libuv::Q.reject(@reactor, err)
+                            ::MTLibuv::Q.reject(@reactor, err)
                         end
                     }
                 end
@@ -131,7 +131,7 @@ module MTLibcouchbase
                             if err.is_a? MTLibcouchbase::Error::KeyNotFound
                                 nil
                             else
-                                ::Libuv::Q.reject(@reactor, err)
+                                ::MTLibuv::Q.reject(@reactor, err)
                             end
                         }
                     }
@@ -412,7 +412,7 @@ module MTLibcouchbase
                     if error.is_a? MTLibcouchbase::Error::KeyNotFound
                         false
                     else
-                        ::Libuv::Q.reject(@reactor, error)
+                        ::MTLibuv::Q.reject(@reactor, error)
                     end
                 }
             end
@@ -498,10 +498,10 @@ module MTLibcouchbase
             view.include_docs = include_docs
             view.is_spatial = is_spatial
 
-            current = ::Libuv::Reactor.current
+            current = ::MTLibuv::Reactor.current
 
             if current && current.running?
-                ResultsLibuv.new(view, current, &row_modifier)
+                ResultsMTLibuv.new(view, current, &row_modifier)
             elsif Object.const_defined?(:EventMachine) && EM.reactor_thread?
                 ResultsEM.new(view, &row_modifier)
             else
@@ -526,9 +526,9 @@ module MTLibcouchbase
             end
             fts = @connection.full_text_search(index, **FtsDefaults.merge(opts))
 
-            current = ::Libuv::Reactor.current
+            current = ::MTLibuv::Reactor.current
             if current && current.running?
-                ResultsLibuv.new(fts, current, &row_modifier)
+                ResultsMTLibuv.new(fts, current, &row_modifier)
             elsif Object.const_defined?(:EventMachine) && EM.reactor_thread?
                 ResultsEM.new(fts, &row_modifier)
             else
@@ -663,7 +663,7 @@ module MTLibcouchbase
         #
         # @return [Array]
         def wait_results(*results)
-            result ::Libuv::Q.all(@reactor, *results.flatten)
+            result ::MTLibuv::Q.all(@reactor, *results.flatten)
         end
 
 
@@ -673,7 +673,7 @@ module MTLibcouchbase
         def result(promise, async = false)
             return promise if async
 
-            current = ::Libuv::Reactor.current
+            current = ::MTLibuv::Reactor.current
             if current && current.running?
                 promise.value
             elsif Object.const_defined?(:EventMachine) && EM.reactor_thread?

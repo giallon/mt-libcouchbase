@@ -6,10 +6,10 @@ module MTLibcouchbase::Ext
   if FFI::Platform.windows?
     ffi_lib ::File.expand_path("../../../../ext/libcouchbase.dll", __FILE__)
   else
-    ffi_lib ::File.expand_path("../../../../ext/mt-libcouchbase/build/lib/libcouchbase.#{FFI::Platform::LIBSUFFIX}", __FILE__)
+    ffi_lib ::File.expand_path("../../../../ext/libcouchbase/build/lib/libcouchbase.#{FFI::Platform::LIBSUFFIX}", __FILE__)
   end
 
-  require 'mt-libcouchbase/ext/libcouchbase_libuv'
+  require 'mt-libcouchbase/ext/mt-libcouchbase_libuv'
 
   autoload :T, 'mt-libcouchbase/ext/mt-libcouchbase/t'
   autoload :HttpRequestT, 'mt-libcouchbase/ext/mt-libcouchbase/http_request_t'

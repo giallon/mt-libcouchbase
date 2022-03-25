@@ -1,6 +1,6 @@
 # frozen_string_literal: true, encoding: ASCII-8BIT
 
-require 'libuv'
+require 'mt-libuv'
 
 module MTLibcouchbase
     require 'mt-libcouchbase/ext/mt-libcouchbase'

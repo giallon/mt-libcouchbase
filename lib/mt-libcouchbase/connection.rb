@@ -70,17 +70,17 @@ module MTLibcouchbase
             @bucket = bucket
 
             # Configure the event loop settings
-            @reactor = thread || ::Libuv::Reactor.current || ::Libuv::Reactor.new
+            @reactor = thread || ::MTLibuv::Reactor.current || ::MTLibuv::Reactor.new
             @reactor.on_program_interrupt { destroy }
             @io_ptr = FFI::MemoryPointer.new :pointer, 1
 
-            # Configure Libuv plugin
-            @io_opts = Ext::Libuv::UVOptions.new
+            # Configure MTLibuv plugin
+            @io_opts = Ext::MTLibuv::UVOptions.new
             @io_opts[:version] = 0
             @io_opts[:loop] = @reactor.handle
             @io_opts[:start_stop_noop] = 1 # We want to control the start and stopping of the loop
 
-            err = Ext::Libuv.create_libuv_io_opts(0, @io_ptr, @io_opts)
+            err = Ext::MTLibuv.create_libuv_io_opts(0, @io_ptr, @io_opts)
             if err != :success
                 raise Error.lookup(err), 'failed to allocate IO plugin'
             end

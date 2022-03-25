@@ -72,7 +72,7 @@ Tested on the following Operating Systems:
 First, you need to load the library:
 
 ```ruby
-require 'libcouchbase'
+require 'mt-libcouchbase'
 ```
 
 The client will automatically adjust configuration when the cluster rebalances its nodes when nodes are added or deleted therefore this client is "smart".
