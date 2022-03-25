@@ -4,9 +4,9 @@ Gem::Specification.new do |gem|
     gem.name          = "mt-libcouchbase"
     gem.version       = MTLibcouchbase::VERSION
     gem.license       = 'MIT'
-    gem.authors       = ["Stephen von Takach"]
-    gem.email         = ["steve@cotag.me"]
-    gem.homepage      = "https://github.com/cotag/libcouchbase"
+    gem.authors       = ["Giallombardo Nathan"]
+    gem.email         = ["nathan.giallombardo@mapotempo.com"]
+    gem.homepage      = "https://github.com/Mapotempo/mt-libcouchbase"
     gem.summary       = "mt-libcouchbase bindings for Ruby"
     gem.description   = "A wrapper around mt-libcouchbase for Ruby"
 
