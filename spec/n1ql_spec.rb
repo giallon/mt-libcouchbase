@@ -97,7 +97,7 @@ describe MTLibcouchbase::N1QL, n1ql_query: true do
         context "without error syntax query" do
             before :each do
                 @n1ql.select('*').from(:default).where('type == "mod"')
-                @reactor = ::Libuv::Reactor.default
+                @reactor = ::MTLibuv::Reactor.default
             end
 
             it "should iterate results" do
@@ -160,7 +160,7 @@ describe MTLibcouchbase::N1QL, n1ql_query: true do
         context "with error syntax query" do
             before :each do
                 @n1ql.select('*azdzadazdzadza').from(:default).where('type == "mod"')
-                @reactor = ::Libuv::Reactor.default
+                @reactor = ::MTLibuv::Reactor.default
             end
             it "should cancel iteration" do
                 results = @n1ql.results

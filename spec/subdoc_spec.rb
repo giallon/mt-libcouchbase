@@ -16,7 +16,7 @@ describe MTLibcouchbase::SubdocRequest do
             },
             another: false
         })
-        @reactor = ::Libuv::Reactor.default
+        @reactor = ::MTLibuv::Reactor.default
         @log = []
     end
 

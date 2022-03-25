@@ -63,7 +63,7 @@ end
 describe MTLibcouchbase::ResultsLibuv do
     before :each do
         @log = []
-        @reactor = ::Libuv::Reactor.default
+        @reactor = ::MTLibuv::Reactor.default
         @reactor.notifier do |err|
             @reactor.stop
             @log << err

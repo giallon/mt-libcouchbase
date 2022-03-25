@@ -7,7 +7,7 @@ describe MTLibcouchbase::QueryView do
     before :each do
         # This will load the couchbase connection on a different thread
         @bucket = MTLibcouchbase::Bucket.new
-        @reactor = ::Libuv::Reactor.default
+        @reactor = ::MTLibuv::Reactor.default
         @log = []
     end
 

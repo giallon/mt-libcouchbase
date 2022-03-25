@@ -70,7 +70,7 @@ end
 
 describe MTLibcouchbase::ResultsNative do
     before :each do
-        reactor = ::Libuv::Reactor.default
+        reactor = ::MTLibuv::Reactor.default
         @qlog = []
         @query = NativeMockQuery.new(@qlog, reactor)
         @log = []

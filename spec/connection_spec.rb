@@ -7,7 +7,7 @@ describe MTLibcouchbase::Connection do
     before :each do
         @log = []
         expect(@log).to eq([])
-        @reactor = ::Libuv::Reactor.default
+        @reactor = ::MTLibuv::Reactor.default
     end
 
     after :each do
