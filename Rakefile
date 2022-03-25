@@ -3,7 +3,7 @@ require 'rspec/core/rake_task'  # testing framework
 require 'yard'                  # yard documentation
 require 'ffi'                   # loads the extension
 require 'rake/clean'            # for the :clobber rake task
-require File.expand_path('../lib/libcouchbase/ext/tasks', __FILE__)    # platform specific rake tasks used by compile
+require File.expand_path('../lib/mt-libcouchbase/ext/tasks', __FILE__)    # platform specific rake tasks used by compile
 
 
 
@@ -25,7 +25,7 @@ YARD::Rake::YardocTask.new do |t|
 end
 
 
-desc 'Compile libcouchbase from submodule'
+desc 'Compile mt-libcouchbase from submodule'
 if FFI::Platform.windows?
     task :compile do
         puts "See windows_build.md for build instructions"
@@ -56,9 +56,9 @@ task :generate_bindings do
     #   respn1ql.rb -> row
 
     FFI::Gen.generate(
-        module_name: "Libcouchbase::Ext",
-        ffi_lib:     "libcouchbase",
-        require_path: "libcouchbase/ext/libcouchbase",
+        module_name: "MTLibcouchbase::Ext",
+        ffi_lib:     "mt-libcouchbase",
+        require_path: "mt-libcouchbase/ext/mt-libcouchbase",
         headers:     [
             "./ext/libcouchbase/include/libcouchbase/couchbase.h",
             "./ext/libcouchbase/include/libcouchbase/error.h",

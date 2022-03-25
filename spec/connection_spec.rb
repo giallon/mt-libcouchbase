@@ -1,9 +1,9 @@
 # frozen_string_literal: true, encoding: ASCII-8BIT
 
-require 'libcouchbase'
+require 'mt-libcouchbase'
 
 
-describe Libcouchbase::Connection do
+describe MTLibcouchbase::Connection do
     before :each do
         @log = []
         expect(@log).to eq([])
@@ -17,7 +17,7 @@ describe Libcouchbase::Connection do
 
     it "should connect and disconnect from the default bucket" do
         @reactor.run { |reactor|
-            connection = Libcouchbase::Connection.new
+            connection = MTLibcouchbase::Connection.new
             connection.connect.then {
                 @log << true
             }.finally { connection.destroy }
@@ -28,7 +28,7 @@ describe Libcouchbase::Connection do
 
     it "should store a key on the default bucket" do
         @reactor.run { |reactor|
-            connection = Libcouchbase::Connection.new
+            connection = MTLibcouchbase::Connection.new
             connection.connect.then do
                 connection.store('sometestkey', {"json" => "data"}).then(proc {|resp|
                     @log << resp.callback
@@ -43,7 +43,7 @@ describe Libcouchbase::Connection do
 
     it "should durably store a key on the default bucket" do
         @reactor.run { |reactor|
-            connection = Libcouchbase::Connection.new
+            connection = MTLibcouchbase::Connection.new
             connection.connect.then do
                 connection.store('sometestkey', {"json" => "data2"}, persist_to: -1, replicate_to: -1).then(proc {|resp|
                     @log << resp.callback
@@ -58,7 +58,7 @@ describe Libcouchbase::Connection do
 
     it "should fetch a key from the default bucket" do
         @reactor.run { |reactor|
-            connection = Libcouchbase::Connection.new
+            connection = MTLibcouchbase::Connection.new
             connection.connect.then do
                 connection.get('sometestkey').then(proc {|resp|
                     @log << resp.value
@@ -74,7 +74,7 @@ describe Libcouchbase::Connection do
     it "should unlock a key on the default bucket" do
 
         @reactor.run { |reactor|
-            connection = Libcouchbase::Connection.new
+            connection = MTLibcouchbase::Connection.new
             connection.connect.then do
                 connection.get('sometestkey', lock: 2).then(proc {|resp|
                     @log << resp.callback
@@ -94,7 +94,7 @@ describe Libcouchbase::Connection do
 
     it "should remove a key on the default bucket" do
         @reactor.run { |reactor|
-            connection = Libcouchbase::Connection.new
+            connection = MTLibcouchbase::Connection.new
             connection.connect.then do
                 connection.remove('sometestkey').then(proc {|resp|
                     @log << :success
@@ -109,10 +109,10 @@ describe Libcouchbase::Connection do
 
     it "should allow settings to be configured" do
         @reactor.run { |reactor|
-            connection = Libcouchbase::Connection.new
+            connection = MTLibcouchbase::Connection.new
             connection.connect.then do
                 expect(connection.configure(:operation_timeout, 1500000).value).to be(connection)
-                expect { connection.configure(:bob, 1500000).value }.to raise_error(Libcouchbase::Error)
+                expect { connection.configure(:bob, 1500000).value }.to raise_error(MTLibcouchbase::Error)
                 @log << :success
                 connection.destroy
             end
@@ -124,7 +124,7 @@ describe Libcouchbase::Connection do
     it "should return the server list" do
         @reactor.run { |reactor|
             begin
-                connection = Libcouchbase::Connection.new
+                connection = MTLibcouchbase::Connection.new
                 connection.connect.value
                 @log = connection.get_server_list.value
             ensure
@@ -137,7 +137,7 @@ describe Libcouchbase::Connection do
 
     it "should support counter operations" do
         @reactor.run { |reactor|
-            connection = Libcouchbase::Connection.new
+            connection = MTLibcouchbase::Connection.new
             connection.connect.then do
                 connection.counter('testcount', initial: 10, expire_in: 2)
                 .then(proc { |resp|
@@ -156,7 +156,7 @@ describe Libcouchbase::Connection do
 
     it "should support touch operations" do
         @reactor.run { |reactor|
-            connection = Libcouchbase::Connection.new
+            connection = MTLibcouchbase::Connection.new
             connection.connect.then do
                 connection.store('testtouch', 34).then(proc {|resp|
                     @log << resp.value
@@ -164,7 +164,7 @@ describe Libcouchbase::Connection do
                         @log << 'set'
                         sleep 2
                         connection.get('testtouch').catch do |err|
-                            @log << err.is_a?(Libcouchbase::Error::KeyNotFound)
+                            @log << err.is_a?(MTLibcouchbase::Error::KeyNotFound)
                         end
                     })
                 }, proc { |error|
@@ -178,7 +178,7 @@ describe Libcouchbase::Connection do
 
     it "should fail to flush unless the connection specifies it is enabled" do
         @reactor.run { |reactor|
-            connection = Libcouchbase::Connection.new
+            connection = MTLibcouchbase::Connection.new
             connection.connect.then do
                 begin
                     connection.flush.then(proc {
@@ -198,7 +198,7 @@ describe Libcouchbase::Connection do
 
     it "should flush when enabled explicitly", flush: true do
         @reactor.run { |reactor|
-            connection = Libcouchbase::Connection.new(bucket: :test, username: 'tester', password: 'password123')
+            connection = MTLibcouchbase::Connection.new(bucket: :test, username: 'tester', password: 'password123')
             connection.connect(flush_enabled: true).then do
                 begin
                     connection.flush.then(proc { |resp|
@@ -218,7 +218,7 @@ describe Libcouchbase::Connection do
 
     it "should perform a HTTP request" do
         @reactor.run { |reactor|
-            connection = Libcouchbase::Connection.new
+            connection = MTLibcouchbase::Connection.new
             connection.connect.then do
                 connection.http("/pools/default/buckets/#{connection.bucket}/ddocs", type: :management).then(
                     proc { |resp|
@@ -237,7 +237,7 @@ describe Libcouchbase::Connection do
 
     it "should fail a HTTP request" do
         @reactor.run { |reactor|
-            connection = Libcouchbase::Connection.new
+            connection = MTLibcouchbase::Connection.new
             connection.connect.then do
                 connection.http("/pools/default/buckets/#{connection.bucket}/ddocs").then(
                     proc { |resp|

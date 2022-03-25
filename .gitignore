@@ -14,7 +14,7 @@ Gemfile.lock
 .yardoc
 bin
 Gemfile-custom
-
+vendor
 *.gem
 
 *.dll

@@ -2,7 +2,7 @@
 require 'rubygems'
 require 'ffi'
 require 'rake/clean'
-require File.expand_path('../../lib/libcouchbase/ext/tasks', __FILE__)
+require File.expand_path('../../lib/mt-libcouchbase/ext/tasks', __FILE__)
 
 
 Dir.chdir File.expand_path("../../", __FILE__)

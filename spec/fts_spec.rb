@@ -1,12 +1,12 @@
 # frozen_string_literal: true, encoding: ASCII-8BIT
 
-require 'libcouchbase'
+require 'mt-libcouchbase'
 
 
-describe Libcouchbase::QueryFullText, full_text_search: true do
+describe MTLibcouchbase::QueryFullText, full_text_search: true do
     before :each do
         # This will load the couchbase connection on a different thread
-        @bucket = Libcouchbase::Bucket.new
+        @bucket = MTLibcouchbase::Bucket.new
         @reactor = ::Libuv::Reactor.default
         @log = []
     end

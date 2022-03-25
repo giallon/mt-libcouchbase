@@ -79,17 +79,17 @@ The client will automatically adjust configuration when the cluster rebalances i
 By default the client will connect to the default bucket on localhost.
 
 ```ruby
-bucket = Libcouchbase::Bucket.new
+bucket = MTLibcouchbase::Bucket.new
 ```
 
 To connect to other buckets, other than the default
 
 ```ruby
 # Same as Libcouchbase::Bucket.new
-bucket = Libcouchbase::Bucket.new(hosts: '127.0.0.1', bucket: 'default', password: nil)
+bucket = MTLibcouchbase::Bucket.new(hosts: '127.0.0.1', bucket: 'default', password: nil)
 
 # To connect to other buckets, you can also specify multiple hosts:
-bucket = Libcouchbase::Bucket.new(hosts: ['cb1.org', 'cb2.org'], bucket: 'app_data', password: 'goodluck')
+bucket = MTLibcouchbase::Bucket.new(hosts: ['cb1.org', 'cb2.org'], bucket: 'app_data', password: 'goodluck')
 ```
 
 Connections can be configured to use `:quiet` mode. This mean it won't raise

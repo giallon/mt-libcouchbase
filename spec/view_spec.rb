@@ -1,12 +1,12 @@
 # frozen_string_literal: true, encoding: ASCII-8BIT
 
-require 'libcouchbase'
+require 'mt-libcouchbase'
 
 
-describe Libcouchbase::QueryView do
+describe MTLibcouchbase::QueryView do
     before :each do
         # This will load the couchbase connection on a different thread
-        @bucket = Libcouchbase::Bucket.new
+        @bucket = MTLibcouchbase::Bucket.new
         @reactor = ::Libuv::Reactor.default
         @log = []
     end
@@ -39,7 +39,7 @@ describe Libcouchbase::QueryView do
 
         it "should fail if a view doesn't exist" do
             view = @bucket.view('zone', 'alling')
-            expect { view.first }.to raise_error(Libcouchbase::Error::HttpError)
+            expect { view.first }.to raise_error(MTLibcouchbase::Error::HttpError)
         end
 
         it "should cancel the request on error" do
@@ -110,7 +110,7 @@ describe Libcouchbase::QueryView do
         it "should fail if a view doesn't exist" do
             @reactor.run { |reactor|
                 view = @bucket.view('zone', 'alling')
-                expect { view.first }.to raise_error(Libcouchbase::Error::HttpError)
+                expect { view.first }.to raise_error(MTLibcouchbase::Error::HttpError)
             }
         end
 
@@ -171,7 +171,7 @@ describe Libcouchbase::QueryView do
             EM.synchrony {
                 begin
                     view = @bucket.view('zone', 'alling')
-                    expect { view.first }.to raise_error(Libcouchbase::Error::HttpError)
+                    expect { view.first }.to raise_error(MTLibcouchbase::Error::HttpError)
                     @log << :made_it_here
                 ensure
                     EM.stop

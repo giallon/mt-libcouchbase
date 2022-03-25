@@ -1,6 +1,6 @@
 # frozen_string_literal: true, encoding: ASCII-8BIT
 
-require 'libcouchbase'
+require 'mt-libcouchbase'
 require 'uv-rays'
 
 
@@ -60,7 +60,7 @@ class MockQuery
 end
 
 
-describe Libcouchbase::ResultsLibuv do
+describe MTLibcouchbase::ResultsLibuv do
     before :each do
         @log = []
         @reactor = ::Libuv::Reactor.default
@@ -169,7 +169,7 @@ describe Libcouchbase::ResultsLibuv do
     it "should handle row modifier exceptions" do
         count = 0
 
-        @view = Libcouchbase::ResultsLibuv.new(@query) { |view|
+        @view = MTLibcouchbase::ResultsLibuv.new(@query) { |view|
             if count == 1
                 raise 'what what'
             end
@@ -191,7 +191,7 @@ describe Libcouchbase::ResultsLibuv do
     it "should handle row modifier exceptions on a short query" do
         count = 0
 
-        @view = Libcouchbase::ResultsLibuv.new(@query) { |view|
+        @view = MTLibcouchbase::ResultsLibuv.new(@query) { |view|
             raise 'what what'
         }
 
@@ -209,7 +209,7 @@ describe Libcouchbase::ResultsLibuv do
     it "should handle multiple exceptions" do
         count = 0
 
-        @view = Libcouchbase::ResultsLibuv.new(@query) { |view|
+        @view = MTLibcouchbase::ResultsLibuv.new(@query) { |view|
             if count == 1
                 raise 'second'
             end

@@ -1,6 +1,6 @@
 # frozen_string_literal: true, encoding: ASCII-8BIT
 
-require 'libcouchbase'
+require 'mt-libcouchbase'
 require 'uv-rays'
 
 
@@ -68,13 +68,13 @@ class NativeMockQuery
 end
 
 
-describe Libcouchbase::ResultsNative do
+describe MTLibcouchbase::ResultsNative do
     before :each do
         reactor = ::Libuv::Reactor.default
         @qlog = []
         @query = NativeMockQuery.new(@qlog, reactor)
         @log = []
-        @view = Libcouchbase::ResultsNative.new(@query)
+        @view = MTLibcouchbase::ResultsNative.new(@query)
         expect(@log).to eq([])
     end
 
@@ -180,7 +180,7 @@ describe Libcouchbase::ResultsNative do
     it "should handle row modifier exceptions" do
         count = 0
 
-        @view = Libcouchbase::ResultsNative.new(@query) { |view|
+        @view = MTLibcouchbase::ResultsNative.new(@query) { |view|
             if count == 1
                 raise 'what what'
             end
@@ -203,7 +203,7 @@ describe Libcouchbase::ResultsNative do
     it "should handle row modifier exceptions on a short query" do
         count = 0
 
-        @view = Libcouchbase::ResultsNative.new(@query) { |view|
+        @view = MTLibcouchbase::ResultsNative.new(@query) { |view|
             raise 'what what'
         }
 
@@ -222,7 +222,7 @@ describe Libcouchbase::ResultsNative do
     it "should handle multiple exceptions" do
         count = 0
 
-        @view = Libcouchbase::ResultsNative.new(@query) { |view|
+        @view = MTLibcouchbase::ResultsNative.new(@query) { |view|
             if count == 1
                 raise 'second'
             end

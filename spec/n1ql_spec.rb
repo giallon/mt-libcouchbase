@@ -1,10 +1,10 @@
 # frozen_string_literal: true, encoding: ASCII-8BIT
 
-require 'libcouchbase'
+require 'mt-libcouchbase'
 
-describe Libcouchbase::N1QL, n1ql_query: true do
+describe MTLibcouchbase::N1QL, n1ql_query: true do
     before :each do
-        @bucket = Libcouchbase::Bucket.new
+        @bucket = MTLibcouchbase::Bucket.new
         @n1ql = @bucket.n1ql
         @log = []
     end
@@ -86,7 +86,7 @@ describe Libcouchbase::N1QL, n1ql_query: true do
             it "should cancel iteration" do
                 results = @n1ql.results
                 expect { results.to_a }.to(raise_error do |error|
-                  expect(error).to be_a(Libcouchbase::Error::HttpError)
+                  expect(error).to be_a(MTLibcouchbase::Error::HttpError)
                   expect(error.message).not_to be_empty
                 end)
             end
@@ -165,7 +165,7 @@ describe Libcouchbase::N1QL, n1ql_query: true do
             it "should cancel iteration" do
                 results = @n1ql.results
                 expect { results.to_a }.to(raise_error do |error|
-                    expect(error).to be_a(Libcouchbase::Error::HttpError)
+                    expect(error).to be_a(MTLibcouchbase::Error::HttpError)
                     expect(error.message).not_to be_empty
                 end)
             end
@@ -251,7 +251,7 @@ describe Libcouchbase::N1QL, n1ql_query: true do
             it "should cancel iteration" do
                 results = @n1ql.results
                 expect { results.to_a }.to(raise_error do |error|
-                    expect(error).to be_a(Libcouchbase::Error::HttpError)
+                    expect(error).to be_a(MTLibcouchbase::Error::HttpError)
                     expect(error.message).not_to be_empty
                 end)
             end

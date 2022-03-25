@@ -1,25 +1,25 @@
 # frozen_string_literal: true, encoding: ASCII-8BIT
 
-require 'libcouchbase'
+require 'mt-libcouchbase'
 
 
-describe Libcouchbase::Error do
+describe MTLibcouchbase::Error do
     it "define the error classes" do
-        expect(Libcouchbase::Error::MapChanged.new.is_a? StandardError).to be(true)
+        expect(MTLibcouchbase::Error::MapChanged.new.is_a? StandardError).to be(true)
     end
 
     it "should be able to look up errors" do
-        expect(Libcouchbase::Error::Lookup[:empty_key]).to   be(Libcouchbase::Error::EmptyKey)
-        expect(Libcouchbase::Error.lookup(:empty_key)).to    be(Libcouchbase::Error::EmptyKey)
-        expect(Libcouchbase::Error.lookup(:whatwhat_key)).to be(Libcouchbase::Error::UnknownError)
-        expect(Libcouchbase::Error.lookup(2)).to             be(Libcouchbase::Error::AuthError)
-        expect(Libcouchbase::Error.lookup(-2)).to            be(Libcouchbase::Error::UnknownError)
+        expect(MTLibcouchbase::Error::Lookup[:empty_key]).to   be(MTLibcouchbase::Error::EmptyKey)
+        expect(MTLibcouchbase::Error.lookup(:empty_key)).to    be(MTLibcouchbase::Error::EmptyKey)
+        expect(MTLibcouchbase::Error.lookup(:whatwhat_key)).to be(MTLibcouchbase::Error::UnknownError)
+        expect(MTLibcouchbase::Error.lookup(2)).to             be(MTLibcouchbase::Error::AuthError)
+        expect(MTLibcouchbase::Error.lookup(-2)).to            be(MTLibcouchbase::Error::UnknownError)
     end
 
     it "should be able to catch generic errors" do
         begin
-            raise ::Libcouchbase::Error::NoMemory, 'what what'
-        rescue ::Libcouchbase::Error => e
+            raise ::MTLibcouchbase::Error::NoMemory, 'what what'
+        rescue ::MTLibcouchbase::Error => e
             expect(e.message).to eq('what what')
         end
     end

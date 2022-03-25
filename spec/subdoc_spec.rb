@@ -1,12 +1,12 @@
 # frozen_string_literal: true, encoding: ASCII-8BIT
 
-require 'libcouchbase'
+require 'mt-libcouchbase'
 
 
-describe Libcouchbase::SubdocRequest do
+describe MTLibcouchbase::SubdocRequest do
     before :each do
         # This will load the couchbase connection on a different thread
-        @bucket = Libcouchbase::Bucket.new
+        @bucket = MTLibcouchbase::Bucket.new
         @bucket.set('subkeytest', {
             bob: 1234,
             hello: 'this value',
@@ -55,7 +55,7 @@ describe Libcouchbase::SubdocRequest do
                     @log << e.class
                 end
             }
-            expect(@log).to eq([::Libcouchbase::Error::SubdocPathNotFound])
+            expect(@log).to eq([::MTLibcouchbase::Error::SubdocPathNotFound])
         end
 
         it "should return nil when quiet is true" do
@@ -132,7 +132,7 @@ describe Libcouchbase::SubdocRequest do
             rescue => e
                 @log << e.class
             end
-            expect(@log).to eq([::Libcouchbase::Error::SubdocPathNotFound])
+            expect(@log).to eq([::MTLibcouchbase::Error::SubdocPathNotFound])
         end
 
         it "should return nil when quiet is true" do

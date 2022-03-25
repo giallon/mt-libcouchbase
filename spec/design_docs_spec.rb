@@ -1,11 +1,11 @@
 # frozen_string_literal: true, encoding: ASCII-8BIT
 
-require 'libcouchbase'
+require 'mt-libcouchbase'
 
 
-describe Libcouchbase::DesignDocs, design_docs: true do
+describe MTLibcouchbase::DesignDocs, design_docs: true do
     before :each do
-        @ddoc = Libcouchbase::Bucket.new.design_docs
+        @ddoc = MTLibcouchbase::Bucket.new.design_docs
     end
 
     it "should list the available designs" do

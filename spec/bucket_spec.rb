@@ -1,13 +1,13 @@
 # frozen_string_literal: true, encoding: ASCII-8BIT
 
-require 'libcouchbase'
-Libcouchbase::Defaults.username = 'tester'
-Libcouchbase::Defaults.password = 'password123'
+require 'mt-libcouchbase'
+MTLibcouchbase::Defaults.username = 'tester'
+MTLibcouchbase::Defaults.password = 'password123'
 
-describe Libcouchbase::Bucket do
+describe MTLibcouchbase::Bucket do
     before :each do
         # This will load the couchbase connection on a different thread
-        @bucket = Libcouchbase::Bucket.new
+        @bucket = MTLibcouchbase::Bucket.new
         @reactor = ::Libuv::Reactor.default
         @log = []
     end
@@ -105,7 +105,7 @@ describe Libcouchbase::Bucket do
                         "current #{current}"
                     end
                     @log << result.value
-                rescue Libcouchbase::Error::KeyExists
+                rescue MTLibcouchbase::Error::KeyExists
                     @log << :error
                 end
             }
@@ -189,7 +189,7 @@ describe Libcouchbase::Bucket do
                     "current #{current}"
                 end
                 @log << result.value
-            rescue Libcouchbase::Error::KeyExists
+            rescue MTLibcouchbase::Error::KeyExists
                 @log << :error
             end
 
@@ -279,7 +279,7 @@ describe Libcouchbase::Bucket do
                         "current #{current}"
                     end
                     @log << result.value
-                rescue Libcouchbase::Error::KeyExists
+                rescue MTLibcouchbase::Error::KeyExists
                     @log << :error
                 end
                 EM.stop
