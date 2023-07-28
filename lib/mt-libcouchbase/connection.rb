@@ -63,7 +63,11 @@ module MTLibcouchbase
         def initialize(hosts: Defaults.host, bucket: Defaults.bucket, username: Defaults.username, password: Defaults.password, thread: nil, **opts)
             # build host string http://docs.couchbase.com/sdk-api/couchbase-c-client-2.5.6/group__lcb-init.html
             hosts = Array(hosts).flatten.join(',')
-            connstr = "couchbase://#{hosts}/#{bucket}"
+            if hosts.start_with? 'couchbase'
+                connstr = "#{hosts}/#{bucket}"
+            else
+                connstr = "couchbase://#{hosts}/#{bucket}"
+            end
             connstr = "#{connstr}?#{opts.map { |k, v| "#{k}=#{v}" }.join('&') }" unless opts.empty?
 
             # It's good to know
